@@ -1,0 +1,8 @@
+.box{
+    display: flex;
+    margin: 20px auto 0;
+}
+
+.box .select {
+  width: calc(80% / 3);
+}
