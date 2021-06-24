@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet"  href="bootstrap-5.0.2-dist/css/bootstrap.css">
+  <link rel="stylesheet"  href="index.css">
+  <title>三级联动</title>
+</head>
+<body>
+<div class="container box">
+  <select  id="province" class="form-select select" aria-label="Default select example">
+    <option data-id="city">请选择省</option>
+  </select>
+  <select  id="cityS" class="form-select select" aria-label="Default select example">
+    <option data-id="city">请选择市</option>
+  </select>
+  <select  id="county" class="form-select select" aria-label="Default select example">
+    <option data-id="city">请选择区</option>
+  </select>
+</div>
+
+<script src="pca-code.js"></script>
+<script src="jquery.js"></script>
+<script src="bootstrap-5.0.2-dist/js/bootstrap.js"></script>
+<script>
+ $(function () {
+   let province = $('#province');
+   let city_s =$('#cityS');
+   let county = $('#county');
+     //省会
+     cityArr.forEach(function (item,index){
+       province.append(`<option value=${index} > ${ item.name } </option>`);
+     })
+     // 省发生改变得时候
+     province.on('change',function (){
+        $('[ data-id=city]').remove()  //发生改变的时候删除省,市,区
+         city_s.html('')
+         county.html('')
+       cityArr[province.val()].children.forEach(function (item,index){
+         city_s.append(`<option value=${index} > ${ item.name } </option>`)
+       })
+       countyFun()
+     })
+     //市发省改变的时候
+     city_s.on('change',function (){
+       countyFun()
+     })
+     function countyFun() {
+       //区
+       county.html('')  //province.val() = 城市的index  city_s.val() = 市的index
+       cityArr[province.val()].children[city_s.val()].children.forEach(function (item){
+         county.append(`<option> ${ item.name } </option>`)
+       })
+     }
+ })
+</script>
+</body>
+</html>
